@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 import { MessageSquarePlus, MoreVertical, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ModeToggle } from "@/components/mode-toggle"
-import { useState } from "react"
+// import { useState } from "react"
 
 const chats = [
     { id: 1, name: "Alice", avatar: "", message: "Hey, are we still on?", time: "10:42 AM", unread: 2, active: true },
@@ -18,7 +18,7 @@ const chats = [
   ];
 
 const Sidebar = () => {
-  const [activeChat, setActiveChat] = useState(1)
+  // const [activeChat, setActiveChat] = useState(1)
   
   return (
     <div className="w-[25%] flex flex-col border-r-2 border-border/40 h-full">

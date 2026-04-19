@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Home from './pages/Home.tsx'
-import Signin from './pages/Signin.tsx'
-import Signup from './pages/Signup.tsx'
+import Signin from './pages/SignIn.tsx'
+import Signup from './pages/SignUp.tsx'
 import About from './pages/About.tsx'
-import { ThemeProvider } from '@/components/theme-provider'
+// import { ThemeProvider } from '@/components/theme-provider'
 
 const RootRedirect = () => {
   const isAuthenticated = localStorage.getItem('wave_token') !== null

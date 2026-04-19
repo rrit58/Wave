@@ -1,13 +1,12 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import Navbar from "@/components/Navbar"
 import { useState } from "react"
 import { EyeOff, Eye } from "lucide-react"
 import Background from "@/components/Background"
 
 const Register = () => {
-  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [formData, setFormData] = useState({
