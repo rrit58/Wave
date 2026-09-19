@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { ArrowRight, MessageSquare, Sparkles } from 'lucide-react'
+import { ArrowRight, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ModeToggle } from '@/components/mode-toggle'
 import { Link } from 'react-router-dom'
@@ -19,10 +19,6 @@ const Root = () => {
       {/* Top Navbar */}
       <div className="absolute top-0 left-0 right-0 p-6 sm:p-10 flex justify-between items-center z-20">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/20 backdrop-blur-md border border-white/20 shadow-lg">
-            <MessageSquare className="h-5 w-5 text-white" />
-          </div>
-
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group transition-all duration-300">
             {/* W */}
