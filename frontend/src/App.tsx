@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import Chat from './pages/Chat'
 import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
@@ -10,19 +10,17 @@ import { CallProvider } from './contexts/CallContext'
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <ChatProvider>
-        <CallProvider>
-          <Routes>
-            <Route path="/" element={<Root />} />
-            <Route path="/register" element={<SignUp />} />
-            <Route path="/login" element={<SignIn />} />
-            <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
-            <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
-          </Routes>
-        </CallProvider>
-      </ChatProvider>
-    </BrowserRouter>
+        <ChatProvider>
+          <CallProvider>
+            <Routes>
+              <Route path="/" element={<Root />} />
+              <Route path="/register" element={<SignUp />} />
+              <Route path="/login" element={<SignIn />} />
+              <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+              <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
+            </Routes>
+          </CallProvider>
+        </ChatProvider>
   )
 }
 
