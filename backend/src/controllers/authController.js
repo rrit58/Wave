@@ -1,7 +1,5 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-dotenv.config();
 
 import prisma from "../config/dbConfig.js";
 import sendOTPMail from "../utils/sendOTPMail.js";
