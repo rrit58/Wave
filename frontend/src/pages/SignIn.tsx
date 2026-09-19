@@ -5,11 +5,14 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Navbar from "@/components/Navbar"
 import Background from "@/components/Background"
-
+import { useAuth } from "@/contexts/AuthContext"
 
 const Login = () => {
   const navigate = useNavigate()
+  const { login } = useAuth()
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -22,10 +25,17 @@ const Login = () => {
     }));
   }
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    localStorage.setItem('wave_token', 'true');
-    navigate('/chat');
+    setError(null);
+    setLoading(true);
+    const res = await login(formData.email, formData.password);
+    if (res.success) {
+      navigate('/chat');
+    } else {
+      setError(res.message || "Failed to login.");
+      setLoading(false);
+    }
   }
 
   return (
@@ -42,6 +52,13 @@ const Login = () => {
             Enter your details to login Wave
           </p>
         </div>
+
+        {/* Error Message */}
+        {error && (
+          <div className="p-3 mb-4 bg-red-500/10 border border-red-500/20 text-red-500 text-xs font-semibold rounded-xl animate-in fade-in slide-in-from-top-2">
+            {error}
+          </div>
+        )}
 
         {/* Form */}
         <form className="space-y-4" onSubmit={handleSubmit}>
@@ -86,8 +103,8 @@ const Login = () => {
           </div>
 
           {/* Submit Button */}
-          <Button type="submit" className="w-full h-11 text-[15px] font-semibold mt-2 shadow-lg transition-all hover:scale-101 cursor-pointer">
-            Login
+          <Button type="submit" disabled={loading} className="w-full h-11 text-[15px] font-semibold mt-2 shadow-lg transition-all hover:scale-101 cursor-pointer">
+            {loading ? "Logging in..." : "Login"}
           </Button>
         </form>
 
