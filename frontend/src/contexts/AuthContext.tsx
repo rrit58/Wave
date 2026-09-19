@@ -1,5 +1,7 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 interface User {
   id: string;
@@ -38,6 +40,7 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthProvider = ({ children }: any) => {
+  const navigate = useNavigate();
   const [user, setUser] = useState<User | null>((): any => {
     const waveUser = localStorage.getItem('wave_user')
     return waveUser ? JSON.parse(waveUser) : null;
@@ -141,6 +144,7 @@ export const AuthProvider = ({ children }: any) => {
       setUser(null);
       setAccessToken(null);
       setRefreshToken(null);
+      navigate('/')
     }
   };
 

@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect, useRef } from "react";
-import { useAuth } from "./AuthContext";
 import { useChat } from "./ChatContext";
 import { CallOverlay } from "@/components/CallOverlay";
 
@@ -54,7 +53,6 @@ const iceServers = {
 };
 
 export const CallProvider = ({ children }: { children: React.ReactNode }) => {
-  const { user } = useAuth();
   const { socket, availableUsers, chats } = useChat();
 
   const [callState, setCallState] = useState<CallState>("idle");
@@ -70,7 +68,7 @@ export const CallProvider = ({ children }: { children: React.ReactNode }) => {
   const localStreamRef = useRef<MediaStream | null>(null);
   const incomingOfferRef = useRef<RTCSessionDescriptionInit | null>(null);
   const iceCandidatesQueueRef = useRef<RTCIceCandidateInit[]>([]);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<any>(null);
 
   // Sync localStreamRef
   useEffect(() => {
@@ -136,7 +134,7 @@ export const CallProvider = ({ children }: { children: React.ReactNode }) => {
       
       // Look up caller name from contacts or active chats
       const sender = availableUsers.find((u) => u.id === from) || chats.find((c) => c.userId === from);
-      const name = sender ? (sender as any).fullName || sender.name : "Incoming call";
+      const name = sender ? (sender as any).fullName || sender.id : "Incoming call";
       
       setOtherUser({ id: from, name });
       setCallType(type);
