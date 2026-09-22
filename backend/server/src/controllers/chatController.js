@@ -1,5 +1,5 @@
 import prisma from "../config/dbConfig.js";
-import { isUserOnline, sendMessageToUser } from "../socket/socket.js";
+import { getOnlineUsers, isUserOnline, sendMessageToUser } from "../services/socketService.js";
 
 // Fetch available verified users except the logged-in user
 export const getAvailableUsers = async (req, res) => {
@@ -18,10 +18,11 @@ export const getAvailableUsers = async (req, res) => {
             }
         });
 
-        // Add online status dynamically from socket mapping
+        // Add online status dynamically from socket service
+        const onlineUsersSet = await getOnlineUsers();
         const usersWithOnlineStatus = users.map(user => ({
             ...user,
-            isOnline: isUserOnline(user.id)
+            isOnline: onlineUsersSet.has(user.id)
         }));
 
         return res.status(200).json({ success: true, users: usersWithOnlineStatus });
@@ -59,6 +60,8 @@ export const getChats = async (req, res) => {
             }
         });
 
+        const onlineUsersSet = await getOnlineUsers();
+
         const formattedChats = await Promise.all(chats.map(async (chat) => {
             const otherUser = chat.userAId === currentUserId ? chat.userB : chat.userA;
             
@@ -75,7 +78,7 @@ export const getChats = async (req, res) => {
                 name: otherUser.fullName,
                 email: otherUser.email,
                 userId: otherUser.id,
-                isOnline: isUserOnline(otherUser.id),
+                isOnline: onlineUsersSet.has(otherUser.id),
                 lastMessage: chat.messages[0] ? chat.messages[0].content : "",
                 lastMessageTime: chat.messages[0] ? chat.messages[0].createdAt : chat.createdAt,
                 unread: unreadCount
@@ -129,12 +132,13 @@ export const getOrCreateChat = async (req, res) => {
         }
 
         const otherUser = chat.userAId === currentUserId ? chat.userB : chat.userA;
+        const isOnline = await isUserOnline(otherUser.id);
         const formattedChat = {
             id: chat.id,
             name: otherUser.fullName,
             email: otherUser.email,
             userId: otherUser.id,
-            isOnline: isUserOnline(otherUser.id),
+            isOnline,
             lastMessage: "",
             lastMessageTime: chat.createdAt,
             unread: 0

@@ -180,8 +180,8 @@ export const ChatProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
 
-    // Connect socket
-    const socketUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    // Connect socket to dedicated socket service
+    const socketUrl = import.meta.env.VITE_SOCKET_URL || "http://localhost:5001";
     const socketInstance = io(socketUrl, {
       auth: { token: accessToken }
     });

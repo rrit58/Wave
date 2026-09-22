@@ -1,19 +1,13 @@
-import http from "http";
 import express from "express";
 import cors from "cors";
 import prisma from "./config/dbConfig.js";
 import userRoutes from "./routes/userRoute.js";
 import chatRoutes from "./routes/chatRoute.js";
-import { handleSocket } from "./socket/socket.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-
 const app = express();
-const server = http.createServer(app);
 const port = process.env.PORT || 5000;
-
-handleSocket(server);
 
 // Middleware
 app.use(cors());
@@ -43,6 +37,6 @@ try {
 }
 
 
-server.listen(port, () => {
-    console.log(`Server is running on port ${port} 🚀`);
+app.listen(port, () => {
+    console.log(`Auth & API Server is running on port ${port} 🚀`);
 });
