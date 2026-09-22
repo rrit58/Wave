@@ -8,6 +8,13 @@ import chatRoutes from "./routes/chatRoute.js";
 const app = express();
 const port = process.env.PORT;
 
+try {
+    await prisma.$connect();
+    console.log("Database Connected Successfully ✅️");
+} catch (error) {
+    console.log("Database Connection Failed ❌️", error);
+}
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -28,12 +35,6 @@ try {
     console.log(error.message);
 }
 
-try {
-    await prisma.$connect();
-    console.log("Database Connected Successfully ✅️");
-} catch (error) {
-    console.log("Database Connection Failed ❌️", error);
-}
 
 
 export default app;
