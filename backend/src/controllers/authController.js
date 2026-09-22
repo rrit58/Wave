@@ -283,6 +283,7 @@ export const forgetPassword = async (req, res) => {
             });
         }
 
+     
         const user = await prisma.user.findUnique({ where: { email } });
         if (!user) {
             return res.status(404).json({
@@ -291,7 +292,7 @@ export const forgetPassword = async (req, res) => {
             });
         }
 
-        const otp = Math.floor(100000 + Math.random() * 900000);
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
         const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
 
         await prisma.user.update({

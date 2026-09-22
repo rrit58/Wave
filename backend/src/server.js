@@ -1,12 +1,12 @@
 import http from "http";
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
-dotenv.config();
 import prisma from "./config/dbConfig.js";
 import userRoutes from "./routes/userRoute.js";
 import chatRoutes from "./routes/chatRoute.js";
 import { handleSocket } from "./socket/socket.js";
+import dotenv from "dotenv";
+dotenv.config();
 
 
 const app = express();
@@ -43,6 +43,6 @@ try {
 }
 
 
-server.listen(port, "0.0.0.0", () => {
+server.listen(port, () => {
     console.log(`Server is running on port ${port} 🚀`);
 });
